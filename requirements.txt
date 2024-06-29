@@ -1,0 +1,9 @@
+fastapi
+pydantic
+uvicorn
+pandas
+selenium
+transformers==4.30.0
+scikit-learn
+tensorflow==2.12.0
+openai
