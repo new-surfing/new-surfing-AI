@@ -2,16 +2,6 @@
 
 ## 프로젝트 구조
 
-project/
-│
-├── app.py # FastAPI 메인 애플리케이션
-├── crawler.py # 기사 본문 크롤링
-├── tech_classifier.py # 기술 기사 필터링
-├── similarity.py # 기사 유사도 분석
-├── job_classifier.py # 기사 라벨링 (직군 분류)
-├── summarizer.py # 기사 요약
-├── requirements.txt # 필요한 라이브러리 목록
-└── utils.py # 기타 유틸리티 함수 (예: tech_words 로드/세이브)
 
 
 ## 파이프라인 흐름도

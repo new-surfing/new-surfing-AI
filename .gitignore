@@ -1,5 +1,8 @@
 kobert_news_classifier/
 kobert_news_classifier2/
-test.ipynb/
-.env/
+
+test.ipynb
+
+.env
+
 crawler.py
