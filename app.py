@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 import logging
 import pandas as pd
+import os
 
 from naver_api import fetch_news_data
 from crawler import crawl_article_content
@@ -9,6 +10,20 @@ from similarity import similarity
 from job_classifier import classify_article
 from summarizer import create_detailed_articles
 # from word_duplication import check_and_remove_terms
+
+from utils import load_environment_variables#, check_and_remove_terms
+
+# 환경 변수 로드
+env_vars = load_environment_variables()
+
+naver_client_id = env_vars['NAVER_CLIENT_ID']
+naver_client_secret = env_vars['NAVER_CLIENT_SECRET']
+openai_api_key = env_vars['OPENAI_API_KEY']
+sql_host = env_vars('SQL_HOST')
+sql_port = env_vars('SQL_PORT')
+sql_db = env_vars('SQL_DB')
+sql_username = env_vars('SQL_USERNAME')
+sql_password = env_vars('SQL_PASSWORD')
 
 app = FastAPI()
 
@@ -32,7 +47,7 @@ def read_root():
 def process_articles():
     try:
         # 뉴스 데이터 가져오기
-        news = fetch_news_data(client_id, client_secret)
+        news = fetch_news_data(naver_client_id, naver_client_secret)
         logger.info(f"Fetched news data: {news.head()}")
         if news.empty:
             raise HTTPException(status_code=404, detail="No News")
@@ -64,7 +79,7 @@ def process_articles():
         logger.info(f"Labeled news: {filter_news.head()}")
 
         # 아티클 생성
-        articles = create_detailed_articles(filter_news)
+        articles = create_detailed_articles(openai_api_key, filter_news)
         logger.info(f"Created articles: {articles.head()}")
 
         # # DB조회 및 중복 용어 제거
@@ -72,9 +87,9 @@ def process_articles():
         # logger.info(f"Articles after removing duplicates: {articles.head()}")
 
         # JSON 변환
-        result_json = articles.to_json(orient='records', force_ascii=False)
+        # result_json = articles.to_json(orient='records', force_ascii=False)
 
-        return result_json
+        return articles
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")

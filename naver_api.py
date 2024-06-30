@@ -56,8 +56,22 @@ def fetch_news_data(client_id, client_secret):
     
     df['source'] = df['source'].apply(lambda x: urlparse(x).netloc)
     # df = df[(df['source'] == 'news.kbs.co.kr') & (df['title'] == '') & (df['title'].notna()) & df['link'].notna() & (df['link'] == '')]
-    df = df[(df['source'] == 'news.kbs.co.kr') & (df['title'] != '') & df['title'].notna() & df['link'].notna() & (df['link'] != '')]
+    # df = df[(df['source'] == 'news.kbs.co.kr') & (df['title'] != '') & df['title'].notna() & df['link'].notna() & (df['link'] != '')]
+    df = df[(df['source'] == 'www.ytn.co.kr') & (df['title'] != '') & df['title'].notna() & df['link'].notna() & (df['link'] != '')]
     # df = df[(df['title'] != '') & df['title'].notna() & df['link'].notna() & (df['link'] != '')]
     
     return df
 
+from utils import load_environment_variables#, check_and_remove_terms
+
+# 환경 변수 로드
+env_vars = load_environment_variables()
+naver_client_id = env_vars['NAVER_CLIENT_ID']
+naver_client_secret = env_vars['NAVER_CLIENT_SECRET']
+openai_api_key = env_vars['OPENAI_API_KEY']
+
+if __name__ == "__main__":
+    client_id = naver_client_id
+    client_secret = naver_client_secret
+    df = fetch_news_data(client_id, client_secret)
+    print(df)

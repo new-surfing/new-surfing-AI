@@ -20,7 +20,8 @@ def crawl_article_content(url):
             driver.get(url)
 
             try:
-                content = driver.find_element(By.CSS_SELECTOR, 'div.detail-body.font-size')
+                # content = driver.find_element(By.CSS_SELECTOR, 'div.detail-body.font-size')
+                content = driver.find_element(By.CSS_SELECTOR, 'div.paragraph')
                 return content.text
             except NoSuchElementException:
                 content = driver.find_element(By.TAG_NAME, 'body')

@@ -3,10 +3,9 @@ import openai
 from openai import OpenAI
 
 
-client = OpenAI(api_key = OPENAI_API_KEY)
 
-def generate_article(content, level) :
-    
+def generate_article(OPENAI_API_KEY, content, level) :
+    client = OpenAI(api_key = OPENAI_API_KEY)
     messages = [
         {
             "role": "system",
@@ -59,7 +58,7 @@ def generate_article(content, level) :
     
     return summary.strip(), tech_terms_and_definitions
 
-def create_detailed_articles(df):
+def create_detailed_articles(OPENAI_API_KEY, df):
     articles_list = []
     news_id = 0
 
@@ -68,7 +67,7 @@ def create_detailed_articles(df):
         content = row['origin_content']
         
         for level in ['초급', '중급', '고급']:
-            summary, tech_terms_and_definitions = generate_article(content, level)
+            summary, tech_terms_and_definitions = generate_article(OPENAI_API_KEY, content, level)
             articles_list.append({
                 "news_id": news_id,
                 'title': title,

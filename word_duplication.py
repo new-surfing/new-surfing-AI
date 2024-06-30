@@ -9,14 +9,27 @@ db_config = {
     'database': 'your_database'
 }
 
+db_config = {
+        host : 'newsurfing-webservice.c5oa8musk0ga.ap-northeast-2.rds.amazonaws.com',
+        port  : '3306', 
+        database : 'api',
+        user : 'ysjo123',
+        password : '!Newnew240628'
+}
+
+# url : jdbc:mysql://newsurfing-webservice.c5oa8musk0ga.ap-northeast-2.rds.amazonaws.com:3306
+# username: ysjo123
+# password: "!Newnew240628"
+
+
 def check_and_remove_terms(df):
 
     conn = mysql.connector.connect(**db_config)
     cursor = conn.cursor()
 
     # 조회할 테이블 및 컬럼명 설정
-    table_name = 'dictionary'
-    column_name = 'term'
+    table_name = 'FORBIDDEN'
+    column_name = 'text'
     
     for index, row in df.iterrows():
         terms = row['Tech terms and definitions']
